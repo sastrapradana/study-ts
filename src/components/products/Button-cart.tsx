@@ -1,8 +1,30 @@
 "use client";
 
-const ButtonCart = ({ description }: { description: string }) => {
+import { useAppStore } from "@/store/store";
+import { useShallow } from "zustand/react/shallow";
+
+interface CardProps {
+  id: string | number;
+  title: string;
+  price: number;
+  image: string;
+  rating: number;
+}
+
+const ButtonCart = ({ data }: { data: CardProps }) => {
+  const [keranjang, setKeranjang] = useAppStore(
+    useShallow((state: any) => [state.keranjang, state.setKeranjang])
+  );
   const handleClick = () => {
-    alert(description);
+    const filterKeranjang = keranjang.filter((item: any) => item.id == data.id);
+    console.log({ filterKeranjang });
+
+    if (filterKeranjang.length > 0) {
+      alert("Produk sudah ada di keranjang");
+    } else {
+      setKeranjang(data);
+    }
+    console.log({ data }, keranjang);
   };
 
   return (

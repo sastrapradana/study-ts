@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonCart from "./Button-cart";
+import Link from "next/link";
 
 interface CardProps {
   id: number;
@@ -20,16 +21,23 @@ const Card: React.FC<CardProps> = ({
   const ratingCount = Math.floor(rating);
   const items = Array(ratingCount).fill(null);
   const items2 = Array(5 - ratingCount).fill(null);
+  const dataProducts = {
+    id,
+    title,
+    price,
+    image,
+    rating,
+  };
 
   return (
-    <div className="w-full h-[450px] max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a href="#">
+    <div className="w-[500px] h-[450px] max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <Link href={`/products/${id}`}>
         <img
           className="p-8 rounded-t-lg object-cover w-full h-[300px]"
           src={image}
           alt="product image"
         />
-      </a>
+      </Link>
       <div className="px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
@@ -71,7 +79,7 @@ const Card: React.FC<CardProps> = ({
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
             ${price}
           </span>
-          <ButtonCart description={description} />
+          <ButtonCart data={dataProducts} />
         </div>
       </div>
     </div>
